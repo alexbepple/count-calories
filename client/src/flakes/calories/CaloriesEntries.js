@@ -1,8 +1,10 @@
 import * as r from 'ramda'
 import * as React from 'react'
 import hh_ from 'hyperscript-helpers'
+
+import { defineProps } from 'util/types'
+
 import * as ceT from './calories-entry-type'
-import { defineProps } from '../../util/types'
 
 const { p } = hh_(React.createElement)
 

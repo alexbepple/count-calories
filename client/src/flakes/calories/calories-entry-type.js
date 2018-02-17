@@ -1,6 +1,7 @@
-import { defineProps } from '../../util/types'
 import * as r from 'ramda'
 import shortid from 'shortid'
+
+import { defineProps } from 'util/types'
 
 export const p = defineProps('id', 'time', 'description', 'calories')
 export const l = r.map(r.lensProp, p)
