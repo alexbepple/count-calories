@@ -1,6 +1,7 @@
 import * as r from 'ramda'
 import * as React from 'react'
 import hh_ from 'hyperscript-helpers'
+import { DateTime } from 'luxon'
 
 import { defineProps } from 'util/types'
 
@@ -14,7 +15,9 @@ const renderEntry = ce =>
   p(
     { key: ce.id },
     r.join(' ')([
-      ceT.g.time(ce).toString(),
+      DateTime.fromJSDate(ceT.g.time(ce)).toLocaleString(
+        DateTime.DATETIME_SHORT
+      ),
       ceT.g.description(ce),
       ceT.g.calories(ce)
     ])
