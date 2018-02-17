@@ -9,7 +9,8 @@
     "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "s-js": "^0.4.7"
+    "s-js": "^0.4.7",
+    "shortid": "^2.2.8"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
