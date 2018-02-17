@@ -7,14 +7,14 @@ import { defineProps } from 'util/types'
 
 import * as ceT from './calories-entry-type'
 
-const { p } = hh_(React.createElement)
+const { table, tbody, tr, td } = hh_(React.createElement)
 
 const t = { p: defineProps('entries') }
 
 const renderEntry = ce =>
-  p(
+  tr(
     { key: ce.id },
-    r.join(' ')([
+    r.addIndex(r.map)((val, idx) => td({ key: idx }, val))([
       DateTime.fromJSDate(ceT.g.time(ce)).toLocaleString(
         DateTime.DATETIME_SHORT
       ),
@@ -23,6 +23,5 @@ const renderEntry = ce =>
     ])
   )
 
-export const CaloriesEntries = props => {
-  return r.map(renderEntry, props[t.p.entries])
-}
+export const CaloriesEntries = props =>
+  table({}, tbody({}, r.map(renderEntry, props[t.p.entries])))
