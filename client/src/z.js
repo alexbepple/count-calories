@@ -1,4 +1,3 @@
-import s from 's-js'
 import * as r from 'ramda'
 
 const signalLens = r.lens(s => s(), (val, s) => s(val))
