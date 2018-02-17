@@ -13,7 +13,7 @@ const t = { p: defineProps('entries') }
 
 const renderEntry = ce =>
   tr(
-    { key: ce.id },
+    { key: ceT.g.id(ce) },
     r.addIndex(r.map)((val, idx) => td({ key: idx }, val))([
       DateTime.fromJSDate(ceT.g.time(ce)).toLocaleString(
         DateTime.DATETIME_SHORT
