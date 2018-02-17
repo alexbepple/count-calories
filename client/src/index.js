@@ -10,11 +10,7 @@ const entries = [
 
 const entries$ = s.data(entries)
 
-const App = () => (
-  <div>
-    <CaloriesEntries entries={entries$()} />
-  </div>
-)
+const App = () => <CaloriesEntries entries={entries$()} />
 
 s.root(() =>
   s.on([entries$], () => render(<App />, document.getElementById('root')))
