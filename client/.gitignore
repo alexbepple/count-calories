@@ -1,0 +1,6 @@
+/node_modules/
+/.reify-cache/
+
+# Parcel
+/.cache/
+/dist/

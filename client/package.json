@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "start": "parcel src/index.html",
+    "test": "mocha --opts mocha.opts"
+  },
+  "private": true,
+  "dependencies": {
+    "ramda": "^0.25.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "recompose": "^0.26.0",
+    "s-js": "^0.4.7"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "hamjest": "^3.1.0",
+    "mocha": "^5.0.0",
+    "parcel-bundler": "^1.5.1",
+    "reify": "^0.13.7"
+  }
+}
