@@ -1,16 +1,28 @@
 import * as React from 'react'
 import {render} from 'react-dom'
 import s from 's-js'
-import {Counter} from './Counter'
+import {CaloriesEntries} from './flakes/calories/CaloriesEntries'
 
-const s1 = s.data(0)
-const s2 = s.data(1)
+const entries = [
+  {
+    time: new Date(),
+    description: 'foo',
+    calories: 5
+  },
+  {
+    time: new Date(),
+    description: 'bar',
+    calories: 11
+  }
+]
+
+const entries$ = s.data(entries)
+
 const App = () => <div>
-  <Counter signal={s1} />
-  <Counter signal={s2} />
-  <Counter signal={s2} />
+  <CaloriesEntries entries={entries$()} />
 </div>
 
-s.root(() =>
-  render(<App />, document.getElementById('root'))
-)
+s.root(() => s.on(
+  [entries$],
+  () => render(<App />, document.getElementById('root'))
+))
