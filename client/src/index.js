@@ -1,8 +1,7 @@
 import * as React from 'react'
 import {render} from 'react-dom'
 import s from 's-js'
-import {CaloriesEntries} from './flakes/calories/CaloriesEntries'
-import * as ceT from './flakes/calories/calories-entry-type'
+import {CaloriesEntries, caloriesEntryType as ceT} from './flakes/calories'
 
 const entries = [
   ceT.create(new Date(), 'foo', 5),
