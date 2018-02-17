@@ -1,3 +1,3 @@
-export {CaloriesEntries} from './CaloriesEntries'
+export { CaloriesEntries } from './CaloriesEntries'
 import * as caloriesEntryType from './calories-entry-type'
-export {caloriesEntryType}
+export { caloriesEntryType }

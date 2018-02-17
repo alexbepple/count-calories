@@ -1,4 +1,4 @@
-import {defineProps} from '../../util/types'
+import { defineProps } from '../../util/types'
 import * as r from 'ramda'
 import shortid from 'shortid'
 
