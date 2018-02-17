@@ -5,11 +5,13 @@ import {CaloriesEntries} from './flakes/calories/CaloriesEntries'
 
 const entries = [
   {
+    id: 1,
     time: new Date(),
     description: 'foo',
     calories: 5
   },
   {
+    id: 2,
     time: new Date(),
     description: 'bar',
     calories: 11
