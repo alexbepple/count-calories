@@ -1,1 +1,1 @@
-https://toptal-calories.netlify.com/
+https://count-calories.netlify.com/
