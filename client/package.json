@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "precommit": "pretty-quick --staged && standard",
+    "precommit": "yarn test && pretty-quick --staged && standard",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
     "test": "mocha --opts mocha.opts"
