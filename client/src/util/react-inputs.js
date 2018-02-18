@@ -8,13 +8,13 @@ const { input } = hh(h)
 export const dtl = {
   toValue: r.pipe(
     x => DateTime.fromJSDate(x),
-    r.ifElse(x => x.isValid, x => x.toFormat("yyyy-MM-dd'T'HH:mm"), x => null)
+    r.ifElse(x => x.isValid, x => x.toFormat("yyyy-MM-dd'T'HH:mm"), x => '')
   )
 }
 
 export const dtlInput = r.pipe(
   r.evolve({
-    defaultValue: dtl.toValue,
+    value: dtl.toValue,
     onChange: f => e => f(DateTime.fromISO(e.target.value).toJSDate())
   }),
   r.merge({ type: 'datetime-local' }),

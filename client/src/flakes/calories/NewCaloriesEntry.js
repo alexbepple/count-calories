@@ -22,18 +22,18 @@ initNewEntry()
 export const NewCaloriesEntry = props =>
   autoKey([
     dtlInput({
-      defaultValue: ceT.g.datetime(newEntry$()),
+      value: ceT.g.datetime(newEntry$()),
       onChange: evolveNewEntry(ceT.s.datetime)
     }),
     input({
       type: 'text',
-      defaultValue: ceT.g.description(newEntry$()),
+      value: ceT.g.description(newEntry$()),
       onChange: e => evolveNewEntry(ceT.s.description, e.target.value)
     }),
     input({
       style: { width: '5em' },
       type: 'number',
-      defaultValue: ceT.g.kcal(newEntry$()),
+      value: ceT.g.kcal(newEntry$()),
       onChange: e =>
         evolveNewEntry(ceT.s.kcal, r.defaultTo(0, e.target.valueAsNumber))
     }),

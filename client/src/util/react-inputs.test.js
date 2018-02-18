@@ -6,6 +6,6 @@ describe('datetime-local input', () => {
     assertThat(dtl.toValue(new Date()), is(string()))
   })
   it('defaults to null', () => {
-    assertThat(dtl.toValue(null), is(null))
+    assertThat(dtl.toValue(null), is(''))
   })
 })
