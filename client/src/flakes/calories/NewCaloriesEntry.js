@@ -17,7 +17,10 @@ const t = { p: defineProps('onAdd') }
 const newEntry$ = s.data(ceT.create(new Date(), '', 0))
 
 const dateTimeLocal = {
-  toValue: x => DateTime.fromJSDate(x).toFormat("yyyy-MM-dd'T'HH:mm"),
+  toValue: r.pipe(
+    x => DateTime.fromJSDate(x),
+    r.ifElse(x => x.isValid, x => x.toFormat("yyyy-MM-dd'T'HH:mm"), x => null)
+  ),
   getDateFromChangeEvent: e => new Date(e.target.valueAsNumber)
 }
 
@@ -41,5 +44,13 @@ export const NewCaloriesEntry = props =>
       onChange: e =>
         z.evolve(ceT.s.kcal(r.defaultTo(0, e.target.valueAsNumber)), newEntry$)
     }),
-    button({ onClick: () => props[t.p.onAdd](newEntry$()) }, 'Add')
+    button(
+      {
+        disabled: !DateTime.fromJSDate(ceT.g.time(newEntry$())).isValid,
+        onClick: () => props[t.p.onAdd](newEntry$())
+      },
+      'Add'
+    )
   ])
+
+NewCaloriesEntry.signal$ = newEntry$

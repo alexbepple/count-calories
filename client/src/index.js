@@ -30,5 +30,7 @@ const App = () => (
 )
 
 s.root(() =>
-  s.on([entries$], () => render(<App />, document.getElementById('root')))
+  s.on([entries$, NewCaloriesEntry.signal$], () =>
+    render(<App />, document.getElementById('root'))
+  )
 )
