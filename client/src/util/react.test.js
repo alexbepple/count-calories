@@ -5,12 +5,7 @@ describe('#autoKey', () => {
   it('adds key prop to object', () => {
     assertThat(
       autoKey([{ foo: null }]),
-      contains(
-        hasProperties({
-          foo: null,
-          key: defined()
-        })
-      )
+      contains(hasProperties({ foo: null, key: defined() }))
     )
   })
 })
