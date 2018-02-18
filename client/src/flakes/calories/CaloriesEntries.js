@@ -12,14 +12,15 @@ const { table, tbody, tr, td } = hh_(React.createElement)
 
 const t = { p: defineProps('entries') }
 
+const formatDateTime = x =>
+  DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
+
 const renderEntry = ce =>
   tr(
     {},
     autoKey(
       r.map(val => td({}, val), [
-        DateTime.fromJSDate(ceT.g.time(ce)).toLocaleString(
-          DateTime.DATETIME_SHORT
-        ),
+        formatDateTime(ceT.g.time(ce)),
         ceT.g.description(ce),
         ceT.g.calories(ce)
       ])
