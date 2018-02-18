@@ -2,6 +2,7 @@ import * as r from 'ramda'
 import shortid from 'shortid'
 
 import { defineProps } from 'util/types'
+import * as dt from 'util/datetime'
 
 export const p = defineProps('id', 'time', 'description', 'kcal')
 export const l = r.map(r.lensProp, p)
@@ -14,3 +15,5 @@ export const create = (time, desc, calories) => ({
   [p.description]: desc,
   [p.kcal]: calories
 })
+
+export const isValid = r.compose(dt.isValid, g.time)

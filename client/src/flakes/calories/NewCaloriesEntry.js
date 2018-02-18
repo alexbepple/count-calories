@@ -2,7 +2,6 @@ import h from 'react-hyperscript'
 import hh from 'hyperscript-helpers'
 import s from 's-js'
 import * as r from 'ramda'
-import { DateTime } from 'luxon'
 
 import * as z from 'util/s-js'
 import { defineProps } from 'util/types'
@@ -38,7 +37,7 @@ export const NewCaloriesEntry = props =>
     }),
     button(
       {
-        disabled: !DateTime.fromJSDate(ceT.g.time(newEntry$())).isValid,
+        disabled: !ceT.isValid(newEntry$()),
         onClick: () => props[t.p.onAdd](newEntry$())
       },
       'Add'
