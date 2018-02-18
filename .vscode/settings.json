@@ -1,0 +1,7 @@
+{
+  "eslint.enable": false,
+  "standard.autoFixOnSave": true,
+  "standard.options": {
+    "envs": ["mocha"]
+  }
+}
