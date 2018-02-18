@@ -15,7 +15,7 @@ export const dtl = {
 export const dtlInput = r.pipe(
   r.evolve({
     defaultValue: dtl.toValue,
-    onChange: f => e => f(new Date(e.target.valueAsNumber))
+    onChange: f => e => f(DateTime.fromISO(e.target.value).toJSDate())
   }),
   r.merge({ type: 'datetime-local' }),
   input
