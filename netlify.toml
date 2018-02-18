@@ -1,4 +1,4 @@
 [build]
-  base    = "client"
+  base    = "client/does.not.exist"
   command = "yarn build --out-dir build"
   publish = "client/build"
