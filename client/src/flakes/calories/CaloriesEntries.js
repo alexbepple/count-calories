@@ -28,6 +28,6 @@ const renderEntry = r.pipe(
 
 export const CaloriesEntries = r.pipe(
   r.prop(t.p.entries),
-  r.pipe(r.map(renderEntry), autoKey),
+  r.map(r.converge(r.merge, [renderEntry, r.pipe(ceT.g.id, r.objOf('key'))])),
   r.compose(table, r.of, tbody)
 )

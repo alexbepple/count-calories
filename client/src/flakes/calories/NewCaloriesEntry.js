@@ -14,8 +14,10 @@ const { input, button } = hh(h)
 
 const t = { p: defineProps('onAdd') }
 
-const newEntry$ = s.data(ceT.create(new Date(), '', 0))
+const newEntry$ = s.data()
+const initNewEntry = () => newEntry$(ceT.create(new Date(), '', 0))
 const evolveNewEntry = r.curry((f, val) => z.evolve(f(val), newEntry$))
+initNewEntry()
 
 export const NewCaloriesEntry = props =>
   autoKey([
@@ -38,7 +40,10 @@ export const NewCaloriesEntry = props =>
     button(
       {
         disabled: !ceT.isValid(newEntry$()),
-        onClick: () => props[t.p.onAdd](newEntry$())
+        onClick: () => {
+          props[t.p.onAdd](newEntry$())
+          initNewEntry()
+        }
       },
       'Add'
     )
