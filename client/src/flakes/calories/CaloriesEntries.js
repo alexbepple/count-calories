@@ -19,7 +19,7 @@ const formatKcal = r.pipe(r.toString, r.concat(r.__, ' kcal'))
 
 const renderEntry = r.pipe(
   r.juxt([
-    r.compose(formatDateTime, ceT.g.time),
+    r.compose(formatDateTime, ceT.g.datetime),
     ceT.g.description,
     r.compose(formatKcal, ceT.g.kcal)
   ]),

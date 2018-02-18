@@ -20,8 +20,8 @@ const evolveNewEntry = r.curry((f, val) => z.evolve(f(val), newEntry$))
 export const NewCaloriesEntry = props =>
   autoKey([
     dtlInput({
-      defaultValue: ceT.g.time(newEntry$()),
-      onChange: evolveNewEntry(ceT.s.time)
+      defaultValue: ceT.g.datetime(newEntry$()),
+      onChange: evolveNewEntry(ceT.s.datetime)
     }),
     input({
       type: 'text',
