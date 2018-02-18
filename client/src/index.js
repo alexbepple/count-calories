@@ -18,8 +18,14 @@ const entries$ = s.data([
 
 const App = () => (
   <React.Fragment>
-    <NewCaloriesEntry onAdd={x => z.evolve(r.append(x), entries$)} />
-    <CaloriesEntries entries={entries$()} />
+    <section>
+      <h2>Add Entry</h2>
+      <NewCaloriesEntry onAdd={x => z.evolve(r.append(x), entries$)} />
+    </section>
+    <section>
+      <h2>Entries</h2>
+      <CaloriesEntries entries={entries$()} />
+    </section>
   </React.Fragment>
 )
 
