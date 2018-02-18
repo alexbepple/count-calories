@@ -21,7 +21,7 @@ const renderEntry = r.pipe(
   r.juxt([
     r.compose(formatDateTime, ceT.g.time),
     ceT.g.description,
-    r.compose(formatCal, ceT.g.calories)
+    r.compose(formatCal, ceT.g.kcal)
   ]),
   r.pipe(r.map(td), autoKey, tr)
 )
