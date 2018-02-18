@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "precommit": "pretty-quick --staged && standard --env mocha",
+    "precommit": "pretty-quick --staged && standard",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html --public-url ./",
     "test": "mocha --opts mocha.opts"
@@ -27,5 +27,8 @@
     "pretty-quick": "^1.4.1",
     "reify": "^0.13.7",
     "standard": "^10.0.3"
+  },
+  "standard": {
+    "envs": ["mocha"]
   }
 }
