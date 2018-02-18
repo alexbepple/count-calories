@@ -14,7 +14,7 @@ const t = { p: defineProps('entries') }
 
 const renderEntry = ce =>
   tr(
-    { key: ceT.g.id(ce) },
+    {},
     autoKey(
       r.map(val => td({}, val), [
         DateTime.fromJSDate(ceT.g.time(ce)).toLocaleString(
@@ -27,4 +27,4 @@ const renderEntry = ce =>
   )
 
 export const CaloriesEntries = props =>
-  table({}, tbody({}, r.map(renderEntry, props[t.p.entries])))
+  table({}, tbody({}, autoKey(r.map(renderEntry, props[t.p.entries]))))
