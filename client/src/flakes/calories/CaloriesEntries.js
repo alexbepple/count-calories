@@ -15,13 +15,13 @@ const t = { p: defineProps('entries') }
 const formatDateTime = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
 
-const formatCal = r.pipe(r.toString, r.concat(r.__, ' kcal'))
+const formatKcal = r.pipe(r.toString, r.concat(r.__, ' kcal'))
 
 const renderEntry = r.pipe(
   r.juxt([
     r.compose(formatDateTime, ceT.g.time),
     ceT.g.description,
-    r.compose(formatCal, ceT.g.kcal)
+    r.compose(formatKcal, ceT.g.kcal)
   ]),
   r.pipe(r.map(td), autoKey, tr)
 )
