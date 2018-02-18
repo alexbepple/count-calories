@@ -15,16 +15,17 @@ const t = { p: defineProps('entries') }
 const formatDateTime = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
 
-const renderEntry = ce =>
-  tr(
-    autoKey(
-      r.map(td, [
-        formatDateTime(ceT.g.time(ce)),
-        ceT.g.description(ce),
-        ceT.g.calories(ce)
-      ])
-    )
-  )
+const renderEntry = r.pipe(
+  r.juxt([
+    r.compose(formatDateTime, ceT.g.time),
+    ceT.g.description,
+    ceT.g.calories
+  ]),
+  r.pipe(r.map(td), autoKey, tr)
+)
 
-export const CaloriesEntries = props =>
-  table([tbody(autoKey(r.map(renderEntry, props[t.p.entries])))])
+export const CaloriesEntries = r.pipe(
+  r.prop(t.p.entries),
+  r.pipe(r.map(renderEntry), autoKey),
+  r.compose(table, r.of, tbody)
+)
