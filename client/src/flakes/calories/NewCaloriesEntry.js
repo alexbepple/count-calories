@@ -7,6 +7,7 @@ import { DateTime } from 'luxon'
 import * as z from 'util/s-js'
 import { defineProps } from 'util/types'
 import { autoKey } from 'util/react'
+import { dtlInput } from 'util/react-inputs'
 
 import * as ceT from './calories-entry-type'
 
@@ -16,21 +17,11 @@ const t = { p: defineProps('onAdd') }
 
 const newEntry$ = s.data(ceT.create(new Date(), '', 0))
 
-const dateTimeLocal = {
-  toValue: r.pipe(
-    x => DateTime.fromJSDate(x),
-    r.ifElse(x => x.isValid, x => x.toFormat("yyyy-MM-dd'T'HH:mm"), x => null)
-  ),
-  getDateFromChangeEvent: e => new Date(e.target.valueAsNumber)
-}
-
 export const NewCaloriesEntry = props =>
   autoKey([
-    input({
-      type: 'datetime-local',
-      defaultValue: r.compose(dateTimeLocal.toValue, ceT.g.time, newEntry$)(),
-      onChange: e =>
-        z.evolve(ceT.s.time(dateTimeLocal.getDateFromChangeEvent(e)), newEntry$)
+    dtlInput({
+      defaultValue: ceT.g.time(newEntry$()),
+      onChange: r.compose(z.evolve(r.__, newEntry$), ceT.s.time)
     }),
     input({
       type: 'text',
