@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "exclude": [
+    "node_modules",
+    "dist", // Parcel
+    ".cache", // Parcel
+    ".reify-cache"
+  ]
+}
