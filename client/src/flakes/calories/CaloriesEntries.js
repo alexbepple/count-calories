@@ -17,12 +17,20 @@ const formatDateTime = x =>
 
 const formatKcal = r.pipe(r.toString, r.concat(r.__, ' kcal'))
 
+const renderReadOnly = r.juxt([
+  r.compose(formatDateTime, ceT.g.datetime),
+  ceT.g.description,
+  r.compose(formatKcal, ceT.g.kcal)
+])
+
+const renderReadWrite = () => ['foo', 'bar', 'baz']
+
 const renderEntry = r.pipe(
-  r.juxt([
-    r.compose(formatDateTime, ceT.g.datetime),
-    ceT.g.description,
-    r.compose(formatKcal, ceT.g.kcal)
-  ]),
+  r.ifElse(
+    ce => ceT.g.description(ce) === 'xyz',
+    renderReadWrite,
+    renderReadOnly
+  ),
   r.pipe(r.map(td), autoKey, tr)
 )
 
