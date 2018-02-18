@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import s from 's-js'
 import * as r from 'ramda'
 
-import * as z from 'z'
+import * as z from 'util/s-js'
 
 import {
   NewCaloriesEntry,
