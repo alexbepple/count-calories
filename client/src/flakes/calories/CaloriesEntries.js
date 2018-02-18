@@ -4,7 +4,7 @@ import hh from 'hyperscript-helpers'
 import { DateTime } from 'luxon'
 
 import { defineProps } from 'util/types'
-import { autoKey } from 'util/react'
+import { autoKey, mapWithKey } from 'util/react'
 
 import * as ceT from './calories-entry-type'
 
@@ -28,6 +28,6 @@ const renderEntry = r.pipe(
 
 export const CaloriesEntries = r.pipe(
   r.prop(t.p.entries),
-  r.map(r.converge(r.merge, [renderEntry, r.pipe(ceT.g.id, r.objOf('key'))])),
+  mapWithKey(ceT.g.id, renderEntry),
   r.compose(table, r.of, tbody)
 )
