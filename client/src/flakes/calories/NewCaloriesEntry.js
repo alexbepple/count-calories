@@ -1,42 +1,22 @@
-import h from 'react-hyperscript'
-import hh from 'hyperscript-helpers'
+import * as React from 'react'
 import s from 's-js'
-import * as r from 'ramda'
 
-import * as z from 'util/s-js'
 import { defineProps } from 'util/types'
 import { autoKey } from 'util/react'
-import { dtlInput } from 'util/react-inputs'
+import { button } from 'util/react-inputs'
 
 import * as ceT from './calories-entry-type'
-
-const { input, button } = hh(h)
+import { EntryEditor } from './EntryEditor'
 
 const t = { p: defineProps('onAdd') }
 
 const newEntry$ = s.data()
 const initNewEntry = () => newEntry$(ceT.create(new Date(), '', 0))
-const evolveNewEntry = r.curry((f, val) => z.evolve(f(val), newEntry$))
 initNewEntry()
 
 export const NewCaloriesEntry = props =>
   autoKey([
-    dtlInput({
-      value: ceT.g.datetime(newEntry$()),
-      onChange: evolveNewEntry(ceT.s.datetime)
-    }),
-    input({
-      type: 'text',
-      value: ceT.g.description(newEntry$()),
-      onChange: e => evolveNewEntry(ceT.s.description, e.target.value)
-    }),
-    input({
-      style: { width: '5em' },
-      type: 'number',
-      value: ceT.g.kcal(newEntry$()),
-      onChange: e =>
-        evolveNewEntry(ceT.s.kcal, r.defaultTo(0, e.target.valueAsNumber))
-    }),
+    <EntryEditor signal={newEntry$} />,
     button(
       {
         disabled: !ceT.isValid(newEntry$()),

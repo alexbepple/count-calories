@@ -3,7 +3,9 @@ import { DateTime } from 'luxon'
 import h from 'react-hyperscript'
 import hh from 'hyperscript-helpers'
 
-const { input } = hh(h)
+const { input, button } = hh(h)
+
+export { input, button }
 
 export const dtl = {
   toValue: r.pipe(
