@@ -24,7 +24,7 @@ const App = () => (
     </section>
     <section>
       <h2>Entries</h2>
-      <CaloriesEntries entries={entries$()} />
+      <CaloriesEntries entries$={entries$} />
     </section>
   </React.Fragment>
 )

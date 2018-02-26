@@ -10,7 +10,7 @@ import * as ceT from './calories-entry-type'
 
 const { table, tbody, tr, td } = hh(h)
 
-const t = { p: defineProps('entries') }
+const t = { p: defineProps('entries$') }
 
 const formatDateTime = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
@@ -34,8 +34,9 @@ const renderEntry = r.pipe(
   r.pipe(r.map(td), autoKey, tr)
 )
 
-export const CaloriesEntries = r.pipe(
-  r.prop(t.p.entries),
-  mapWithKey(ceT.g.id, renderEntry),
-  r.compose(table, r.of, tbody)
-)
+export const CaloriesEntries = props =>
+  r.pipe(
+    r.prop(t.p.entries$, props),
+    mapWithKey(ceT.g.id, renderEntry),
+    r.compose(table, r.of, tbody)
+  )()
