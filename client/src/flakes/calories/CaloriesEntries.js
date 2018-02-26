@@ -5,14 +5,19 @@ import { DateTime } from 'luxon'
 
 import { defineTypeWithProps } from 'util/types'
 import { autoKey, mapWithKey } from 'util/react'
-import { derive } from 'util/s-js'
+import { derive, evolve } from 'util/s-js'
 
 import * as ceT from './calories-entry-type'
 import { EntryEditor } from './EntryEditor'
+import { createRegisteredSignal } from '../signals'
 
 const { table, tbody, tr, td } = hh(h)
 
 const t = defineTypeWithProps('entries$')
+
+const editedIds$ = createRegisteredSignal([])
+const isBeingEdited = ce => r.contains(ceT.g.id(ce), editedIds$())
+const startEditing = ce => evolve(r.append(ceT.g.id(ce)), editedIds$)
 
 const formatDateTime = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
@@ -25,19 +30,20 @@ const renderReadOnly = r.juxt([
   r.compose(formatKcal, ceT.g.kcal)
 ])
 
+const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
+
 export const CaloriesEntries = props => {
   const entries$ = t.g.entries$(props)
   const renderReadWrite = ce =>
     EntryEditor({ signal: derive(ceT.hasSameId(ce), entries$) })
 
-  const renderEntry = r.pipe(
-    r.ifElse(
-      ce => ceT.g.description(ce) === 'xyz',
-      renderReadWrite,
-      renderReadOnly
-    ),
-    r.pipe(r.map(r.pipe(r.of, td)), autoKey, tr)
-  )
+  const renderEntry = ce =>
+    r.pipe(
+      () => ce,
+      r.ifElse(isBeingEdited, renderReadWrite, renderReadOnly),
+      createCells,
+      cells => tr({ onClick: () => startEditing(ce) }, cells)
+    )()
 
   return r.pipe(
     entries$,
