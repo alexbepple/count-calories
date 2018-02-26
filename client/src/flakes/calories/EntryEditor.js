@@ -3,14 +3,14 @@ import * as r from 'ramda'
 import * as z from 'util/s-js'
 import { autoKey } from 'util/react'
 import { input, dtlInput } from 'util/react-inputs'
-import { defineProps } from 'util/types'
+import { defineTypeWithProps } from 'util/types'
 
 import * as ceT from './calories-entry-type'
 
-const t = { p: defineProps('signal') }
+const t = defineTypeWithProps('signal')
 
 export const EntryEditor = props => {
-  const entry$ = props[t.p.signal]
+  const entry$ = t.g.signal(props)
   const evolveEntry = r.curry((f, val) => z.evolve(f(val), entry$))
   return autoKey([
     dtlInput({

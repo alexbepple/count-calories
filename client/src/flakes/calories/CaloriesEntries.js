@@ -3,7 +3,7 @@ import h from 'react-hyperscript'
 import hh from 'hyperscript-helpers'
 import { DateTime } from 'luxon'
 
-import { defineProps } from 'util/types'
+import { defineTypeWithProps } from 'util/types'
 import { autoKey, mapWithKey } from 'util/react'
 import { derive } from 'util/s-js'
 
@@ -12,7 +12,7 @@ import { EntryEditor } from './EntryEditor'
 
 const { table, tbody, tr, td } = hh(h)
 
-const t = { p: defineProps('entries$') }
+const t = defineTypeWithProps('entries$')
 
 const formatDateTime = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
@@ -26,7 +26,7 @@ const renderReadOnly = r.juxt([
 ])
 
 export const CaloriesEntries = props => {
-  const entries$ = r.prop(t.p.entries$, props)
+  const entries$ = t.g.entries$(props)
   const renderReadWrite = ce =>
     EntryEditor({ signal: derive(ceT.hasSameId(ce), entries$) })
 
