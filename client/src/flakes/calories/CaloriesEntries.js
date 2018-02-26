@@ -42,7 +42,11 @@ export const CaloriesEntries = props => {
       () => ce,
       r.ifElse(isBeingEdited, renderReadWrite, renderReadOnly),
       createCells,
-      cells => tr({ onClick: () => startEditing(ce) }, cells)
+      cells =>
+        tr(
+          { style: { cursor: 'pointer' }, onClick: () => startEditing(ce) },
+          cells
+        )
     )()
 
   return r.pipe(
