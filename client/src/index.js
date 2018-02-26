@@ -10,8 +10,9 @@ import {
   CaloriesEntries,
   caloriesEntryType as ceT
 } from 'flakes/calories'
+import { createRegisteredSignal, getRegisteredSignals } from 'flakes/signals'
 
-const entries$ = s.data([
+const entries$ = createRegisteredSignal([
   ceT.create(new Date(), 'foo', 5),
   ceT.create(new Date(), 'bar', 11)
 ])
@@ -30,7 +31,7 @@ const App = () => (
 )
 
 s.root(() =>
-  s.on([entries$, NewCaloriesEntry.signal$], () =>
+  s.on(getRegisteredSignals(), () =>
     render(<App />, document.getElementById('root'))
   )
 )

@@ -1,16 +1,17 @@
 import * as React from 'react'
-import s from 's-js'
 
 import { defineTypeWithProps } from 'util/types'
 import { autoKey } from 'util/react'
 import { button } from 'util/react-inputs'
+
+import { createRegisteredSignal } from 'flakes/signals'
 
 import * as ceT from './calories-entry-type'
 import { EntryEditor } from './EntryEditor'
 
 const t = defineTypeWithProps('onAdd')
 
-const newEntry$ = s.data()
+const newEntry$ = createRegisteredSignal()
 const initNewEntry = () => newEntry$(ceT.create(new Date(), '', 0))
 initNewEntry()
 
@@ -28,5 +29,3 @@ export const NewCaloriesEntry = props =>
       'Add'
     )
   ])
-
-NewCaloriesEntry.signal$ = newEntry$
