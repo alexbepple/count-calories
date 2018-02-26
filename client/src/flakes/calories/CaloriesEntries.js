@@ -5,8 +5,10 @@ import { DateTime } from 'luxon'
 
 import { defineProps } from 'util/types'
 import { autoKey, mapWithKey } from 'util/react'
+import { derive } from 'util/s-js'
 
 import * as ceT from './calories-entry-type'
+import { EntryEditor } from './EntryEditor'
 
 const { table, tbody, tr, td } = hh(h)
 
@@ -23,20 +25,23 @@ const renderReadOnly = r.juxt([
   r.compose(formatKcal, ceT.g.kcal)
 ])
 
-const renderReadWrite = () => ['foo', 'bar', 'baz']
+export const CaloriesEntries = props => {
+  const entries$ = r.prop(t.p.entries$, props)
+  const renderReadWrite = ce =>
+    EntryEditor({ signal: derive(ceT.hasSameId(ce), entries$) })
 
-const renderEntry = r.pipe(
-  r.ifElse(
-    ce => ceT.g.description(ce) === 'xyz',
-    renderReadWrite,
-    renderReadOnly
-  ),
-  r.pipe(r.map(td), autoKey, tr)
-)
+  const renderEntry = r.pipe(
+    r.ifElse(
+      ce => ceT.g.description(ce) === 'xyz',
+      renderReadWrite,
+      renderReadOnly
+    ),
+    r.pipe(r.map(r.pipe(r.of, td)), autoKey, tr)
+  )
 
-export const CaloriesEntries = props =>
-  r.pipe(
-    r.prop(t.p.entries$, props),
+  return r.pipe(
+    entries$,
     mapWithKey(ceT.g.id, renderEntry),
     r.compose(table, r.of, tbody)
   )()
+}

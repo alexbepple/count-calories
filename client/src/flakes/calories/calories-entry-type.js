@@ -17,3 +17,5 @@ export const create = (time, desc, calories) => ({
 })
 
 export const isValid = r.compose(dt.isValid, g.datetime)
+
+export const hasSameId = r.useWith(r.equals, [g.id, g.id])
