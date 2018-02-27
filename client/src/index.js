@@ -12,10 +12,18 @@ import {
 } from 'flakes/calories'
 import { createRegisteredSignal, getRegisteredSignals } from 'flakes/signals'
 
-const entries$ = createRegisteredSignal([
-  ceT.create(new Date(), 'foo', 5),
-  ceT.create(new Date(), 'bar', 11)
-])
+const entries$ = createRegisteredSignal([])
+
+fetch('/api')
+  .then(res => res.json())
+  .then(
+    r.map(
+      r.evolve({
+        [ceT.p.datetime]: x => new Date(x)
+      })
+    )
+  )
+  .then(entries$)
 
 const App = () => (
   <React.Fragment>
