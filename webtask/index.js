@@ -1,12 +1,32 @@
-const app = new (require("express"))();
+const express = require("express");
+const bodyParser = require("body-parser");
 const wt = require("webtask-tools");
 
-app.get("/entries", function(req, res) {
-  const entries = [
-    { id: "rkXObM7Of", datetime: new Date(), description: "foo", kcal: 5 },
-    { id: "BkemuWfmuM", datetime: new Date(), description: "bar", kcal: 11 }
-  ];
-  res.json(entries);
-});
+const getEntries = (req, res) => {
+  const storage = req.webtaskContext.storage;
+  storage.get((err, data) => {
+    const entries = data || [];
+    res.status(200).send(entries);
+  });
+};
 
-module.exports = wt.fromExpress(app);
+const putEntries = (req, res) => {
+  const storage = req.webtaskContext.storage;
+  const entries = req.body;
+  storage.get((err, data) => {
+    if (err) res.status(500).send(err);
+    storage.set(entries, err => {
+      if (err) res.status(500).send(err);
+      getEntries(req, res);
+    });
+  });
+};
+
+const resources = { entries: "/entries" };
+
+module.exports = wt.fromExpress(
+  express()
+    .use(bodyParser.json())
+    .get(resources.entries, getEntries)
+    .put(resources.entries, putEntries)
+);
