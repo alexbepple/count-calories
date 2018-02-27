@@ -6,6 +6,8 @@ import * as _ from 'lodash'
 
 import * as z from 'util/s-js'
 
+import * as http from 'flakes/http'
+
 import {
   NewCaloriesEntry,
   CaloriesEntries,
@@ -18,8 +20,8 @@ const entries$ = createRegisteredSignal([])
 const loading$ = s.value(false)
 
 loading$(true)
-fetch('/api/entries')
-  .then(res => res.json())
+http
+  .get('/entries')
   .then(
     r.map(
       r.evolve({
@@ -30,14 +32,7 @@ fetch('/api/entries')
   .then(entries$)
   .finally(() => loading$(false))
 
-const persistEntries = entries =>
-  fetch('/api/entries', {
-    method: 'PUT',
-    body: JSON.stringify(entries),
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    })
-  })
+const persistEntries = http.put(r.__, '/entries')
 
 const persistEntriesDebounced = _.debounce(persistEntries, 500)
 s.root(() =>
