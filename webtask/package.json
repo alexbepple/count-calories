@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "wt serve .",
+    "deploy": "wt create --name 'count-calories' ."
+  },
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.2",
+    "webtask-tools": "^3.2.0"
+  },
+  "devDependencies": {
+    "wt-cli": "^8.3.1"
+  }
+}
