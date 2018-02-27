@@ -3,11 +3,11 @@ import { render } from 'react-dom'
 import s from 's-js'
 import * as r from 'ramda'
 import * as _ from 'lodash'
+import { ProgressBar } from 'reprogressbars'
 
 import * as z from 'util/s-js'
 
 import * as http from 'flakes/http'
-
 import {
   NewCaloriesEntry,
   CaloriesEntries,
@@ -17,7 +17,7 @@ import { createRegisteredSignal, getRegisteredSignals } from 'flakes/signals'
 
 const entries$ = createRegisteredSignal([])
 
-const loading$ = s.value(false)
+const loading$ = createRegisteredSignal(false)
 
 loading$(true)
 http
@@ -43,6 +43,9 @@ s.root(() =>
 
 const App = () => (
   <React.Fragment>
+    <div style={{ position: 'fixed', left: 0, top: 0, width: '100%' }}>
+      <ProgressBar isLoading={loading$()} />
+    </div>
     <section>
       <h2>Add Entry</h2>
       <NewCaloriesEntry onAdd={x => z.evolve(r.append(x), entries$)} />

@@ -1124,6 +1124,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
+
 cli-cursor@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-1.0.2.tgz#64da3f7d56a54412e59794bd62dc35295e8f2987"
@@ -4504,6 +4508,14 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
+reprogressbars@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/reprogressbars/-/reprogressbars-1.0.1.tgz#0a512f02f85fbf1c6de400b87ce1cc40ce9f409a"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+    shifty "^2.3.1"
+
 request@2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
@@ -4792,6 +4804,12 @@ shelljs@^0.7.5:
     glob "^7.0.0"
     interpret "^1.0.0"
     rechoir "^0.6.2"
+
+shifty@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/shifty/-/shifty-2.3.1.tgz#ca92001c04718911f3b48d179aa858cc9cc86009"
+  dependencies:
+    object-assign "^4.1.1"
 
 shortid@^2.2.8:
   version "2.2.8"
