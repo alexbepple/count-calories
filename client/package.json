@@ -1,8 +1,12 @@
 {
+  "config": {
+    "parcel_entry_point": "src/index.html"
+  },
   "scripts": {
     "precommit": "yarn test && pretty-quick --staged && standard && eslint src",
     "start": "node parcel+proxy.js",
-    "build": "parcel build src/index.html --public-url ./",
+    "build":
+      "parcel build $npm_package_config_parcel_entry_point --public-url ./",
     "test": "mocha --opts mocha.opts"
   },
   "private": true,

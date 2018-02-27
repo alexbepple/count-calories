@@ -13,5 +13,7 @@ express()
       pathRewrite: { '^/api': '' }
     })
   )
-  .use(new Parcel('src/index.html').middleware())
+  .use(
+    new Parcel(process.env.npm_package_config_parcel_entry_point).middleware()
+  )
   .listen(port)
