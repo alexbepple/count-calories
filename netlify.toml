@@ -1,7 +1,8 @@
+redirects = [
+  {from = "/api/*", to = "https://wt-05c9272e8038f4b0552a40c8559e0b07-0.run.webtask.io/count-calories/:splat", status = 200}
+]
+
 [build]
   base    = "client"
   command = "yarn build --out-dir build"
   publish = "client/build"
-  redirects = [
-    {from = "/api/*", to = "https://wt-05c9272e8038f4b0552a40c8559e0b07-0.run.webtask.io/count-calories/:splat", status = 200}
-  ]
