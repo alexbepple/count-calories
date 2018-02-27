@@ -13,11 +13,13 @@ import {
   fetchEntries,
   persistEntries
 } from 'flakes/calories'
-import { createRegisteredSignal, getRegisteredSignals } from 'flakes/signals'
+import {
+  createRegisteredValueSignal,
+  getRegisteredSignals
+} from 'flakes/signals'
 
-const entries$ = createRegisteredSignal([])
-
-const loading$ = createRegisteredSignal(false)
+const entries$ = createRegisteredValueSignal([])
+const loading$ = createRegisteredValueSignal(false)
 
 loading$(true)
 fetchEntries()

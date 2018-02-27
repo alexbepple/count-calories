@@ -9,13 +9,13 @@ import { derive, evolve } from 'util/s-js'
 
 import * as ceT from './calories-entry-type'
 import { EntryEditor } from './EntryEditor'
-import { createRegisteredSignal } from '../signals'
+import { createRegisteredValueSignal } from '../signals'
 
 const { table, tbody, tr, td } = hh(h)
 
 const t = defineTypeWithProps('entries$')
 
-const editedIds$ = createRegisteredSignal([])
+const editedIds$ = createRegisteredValueSignal([])
 const isBeingEdited = ce => r.contains(ceT.g.id(ce), editedIds$())
 const startEditing = ce => evolve(r.append(ceT.g.id(ce)), editedIds$)
 

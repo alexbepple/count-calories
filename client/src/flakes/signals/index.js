@@ -3,7 +3,7 @@ import * as r from 'ramda'
 
 const signals = []
 export const getRegisteredSignals = () => signals
-export const createRegisteredSignal = r.pipe(
-  s.data,
+export const createRegisteredValueSignal = r.pipe(
+  s.value,
   r.tap($ => signals.push($))
 )
