@@ -2,6 +2,7 @@ import * as React from 'react'
 import { render } from 'react-dom'
 import s from 's-js'
 import * as r from 'ramda'
+import * as _ from 'lodash'
 
 import * as z from 'util/s-js'
 
@@ -29,17 +30,19 @@ fetch('/api/entries')
   .then(entries$)
   .finally(() => loading$(false))
 
+const persistEntries = entries =>
+  fetch('/api/entries', {
+    method: 'PUT',
+    body: JSON.stringify(entries),
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  })
+
+const persistEntriesDebounced = _.debounce(persistEntries, 500)
 s.root(() =>
   s.on(entries$, () => {
-    if (loading$()) return
-
-    fetch('/api/entries', {
-      method: 'PUT',
-      body: JSON.stringify(entries$()),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    })
+    if (!loading$()) persistEntriesDebounced(entries$())
   })
 )
 
