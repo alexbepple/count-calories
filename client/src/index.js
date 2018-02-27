@@ -14,7 +14,7 @@ import { createRegisteredSignal, getRegisteredSignals } from 'flakes/signals'
 
 const entries$ = createRegisteredSignal([])
 
-fetch('/api')
+fetch('/api/entries')
   .then(res => res.json())
   .then(
     r.map(
