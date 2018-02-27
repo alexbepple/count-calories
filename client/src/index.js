@@ -7,11 +7,11 @@ import { ProgressBar } from 'reprogressbars'
 
 import * as z from 'util/s-js'
 
-import * as http from 'flakes/http'
 import {
   NewCaloriesEntry,
   CaloriesEntries,
-  caloriesEntryType as ceT
+  fetchEntries,
+  persistEntries
 } from 'flakes/calories'
 import { createRegisteredSignal, getRegisteredSignals } from 'flakes/signals'
 
@@ -20,19 +20,9 @@ const entries$ = createRegisteredSignal([])
 const loading$ = createRegisteredSignal(false)
 
 loading$(true)
-http
-  .get('/entries')
-  .then(
-    r.map(
-      r.evolve({
-        [ceT.p.datetime]: x => new Date(x)
-      })
-    )
-  )
+fetchEntries()
   .then(entries$)
   .finally(() => loading$(false))
-
-const persistEntries = http.put(r.__, '/entries')
 
 const persistEntriesDebounced = _.debounce(persistEntries, 500)
 s.root(() =>
