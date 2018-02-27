@@ -1,6 +1,6 @@
 {
   "standard.autoFixOnSave": true,
   "standard.options": {
-    "envs": ["mocha"]
+    "envs": ["mocha", "browser"]
   }
 }
