@@ -14,6 +14,9 @@ import { createRegisteredSignal, getRegisteredSignals } from 'flakes/signals'
 
 const entries$ = createRegisteredSignal([])
 
+const loading$ = s.value(false)
+
+loading$(true)
 fetch('/api/entries')
   .then(res => res.json())
   .then(
@@ -24,6 +27,21 @@ fetch('/api/entries')
     )
   )
   .then(entries$)
+  .finally(() => loading$(false))
+
+s.root(() =>
+  s.on(entries$, () => {
+    if (loading$()) return
+
+    fetch('/api/entries', {
+      method: 'PUT',
+      body: JSON.stringify(entries$()),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+  })
+)
 
 const App = () => (
   <React.Fragment>
