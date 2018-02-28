@@ -31,11 +31,20 @@ const putEntries = (req, res) => {
   });
 };
 
-const resources = { entries: "/entries" };
+const getGreeting = (req, res) => {
+  res.send({ hello: "world" });
+};
 
-module.exports = wt.fromExpress(
-  express()
-    .use(bodyParser.json())
-    .get(resources.entries, getEntries)
-    .put(resources.entries, putEntries)
-);
+const resources = { entries: "/entries", greeting: "/greeting" };
+
+module.exports = wt
+  .fromExpress(
+    express()
+      .use(bodyParser.json())
+      .get(resources.entries, getEntries)
+      .put(resources.entries, putEntries)
+      .get(resources.greeting, getGreeting)
+  )
+  .auth0({
+    exclude: "/entries"
+  });
