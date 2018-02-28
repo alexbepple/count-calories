@@ -46,7 +46,6 @@ module.exports = wt
       .get(resources.greeting, getGreeting)
   )
   .auth0({
-    exclude: "/entries",
     loginSuccess: (ctx, req, res, baseUrl) => {
       res.writeHead(302, {
         Location: `https://count-calories.netlify.com/?access_token=${
