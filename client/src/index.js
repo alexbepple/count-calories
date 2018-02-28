@@ -18,6 +18,18 @@ import {
   getRegisteredSignals
 } from 'flakes/signals'
 
+const searchParams = new URLSearchParams(window.location.search.substr(1))
+if (searchParams.has('access_token')) {
+  fetch('/api/greeting', {
+    headers: new Headers({
+      Authorization: 'Bearer ' + searchParams.get('access_token')
+    })
+  })
+    .then(x => x.json())
+    .then(console.log.bind(console)) // eslint-disable-line
+  window.history.pushState({}, '', '/')
+}
+
 const entries$ = createRegisteredValueSignal([])
 const loading$ = createRegisteredValueSignal(false)
 
