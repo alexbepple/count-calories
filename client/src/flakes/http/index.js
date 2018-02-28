@@ -16,14 +16,17 @@ const headers = r.pipe(
 )
 
 export const get = resource =>
-  fetch(getFullResourceName(resource), {
-    headers: headers(auth())
-  }).then(res => res.json())
+  fetch(getFullResourceName(resource), headers(auth())).then(res => res.json())
 
 export const put = r.curry((data, resource) =>
-  fetch(getFullResourceName(resource), {
-    method: 'PUT',
-    body: JSON.stringify(data),
-    headers: headers(auth(), sendJson.contentType)
-  })
+  fetch(
+    getFullResourceName(resource),
+    r.merge(
+      {
+        method: 'PUT',
+        body: JSON.stringify(data)
+      },
+      headers(auth(), sendJson.contentType)
+    )
+  )
 )
