@@ -33,21 +33,18 @@ const loading$ = createRegisteredValueSignal(false)
 
 const autoPersistEntries = () => {
   const persistEntriesDebounced = _.debounce(persistEntries, 500)
-  s.on(entries$, () => {
+  z.onChanges(entries$, () => {
     if (!loading$()) persistEntriesDebounced(entries$())
   })
 }
-const autoFetchEntries = () =>
-  s(() => {
-    if (!isAuthed()) return
-    loading$(true)
-    fetchEntries()
-      .then(entries$)
-      .then(() => autoPersistEntries())
-      .finally(() => loading$(false))
-  })
+s.root(() => autoPersistEntries())
 
-s.root(() => autoFetchEntries())
+if (isAuthed()) {
+  loading$(true)
+  fetchEntries()
+    .then(entries$)
+    .finally(() => loading$(false))
+}
 
 const App = () => (
   <React.Fragment>
