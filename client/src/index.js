@@ -18,19 +18,29 @@ import {
   getRegisteredSignals
 } from 'flakes/signals'
 
+const authToken$ = s.value()
+const isAuthed = authToken$
 const searchParams = new URLSearchParams(window.location.search.substr(1))
-if (!searchParams.has('access_token')) {
+if (searchParams.has('access_token')) {
+  authToken$(searchParams.get('access_token'))
+  window.history.pushState({}, '', '/')
+} else {
   window.location.assign('/api/login')
 }
 
-fetch('/api/greeting', {
-  headers: new Headers({
-    Authorization: 'Bearer ' + searchParams.get('access_token')
-  })
-})
-  .then(x => x.json())
-  .then(console.log.bind(console)) // eslint-disable-line
-window.history.pushState({}, '', '/')
+s.root(() =>
+  s(
+    () =>
+      isAuthed() &&
+      fetch('/api/greeting', {
+        headers: new Headers({
+          Authorization: 'Bearer ' + authToken$()
+        })
+      })
+        .then(x => x.json())
+        .then(console.log.bind(console)) // eslint-disable-line
+  )
+)
 
 const entries$ = createRegisteredValueSignal([])
 const loading$ = createRegisteredValueSignal(false)
