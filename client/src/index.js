@@ -17,8 +17,8 @@ import {
   createRegisteredValueSignal,
   getRegisteredSignals
 } from 'flakes/signals'
+import { authToken$ } from 'flakes/auth'
 
-const authToken$ = s.value()
 const isAuthed = authToken$
 const searchParams = new URLSearchParams(window.location.search.substr(1))
 if (searchParams.has('access_token')) {
