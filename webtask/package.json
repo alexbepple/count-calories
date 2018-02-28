@@ -2,7 +2,7 @@
   "scripts": {
     "start": "nodemon -x 'wt serve' .",
     "start_once": "wt serve .",
-    "deploy": "wt create --name 'count-calories' ."
+    "deploy": "wt create --secrets-file secrets.ini --name 'count-calories' ."
   },
   "private": true,
   "dependencies": {
