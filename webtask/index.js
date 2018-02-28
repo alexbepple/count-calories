@@ -31,11 +31,7 @@ const putEntries = (req, res) => {
   });
 };
 
-const getGreeting = (req, res) => {
-  res.send({ hello: req.user.sub });
-};
-
-const resources = { entries: "/entries", greeting: "/greeting" };
+const resources = { entries: "/entries" };
 
 module.exports = wt
   .fromExpress(
@@ -43,7 +39,6 @@ module.exports = wt
       .use(bodyParser.json())
       .get(resources.entries, getEntries)
       .put(resources.entries, putEntries)
-      .get(resources.greeting, getGreeting)
   )
   .auth0({
     loginSuccess: (ctx, req, res, baseUrl) => {
