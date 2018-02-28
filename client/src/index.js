@@ -19,6 +19,7 @@ import {
 } from 'flakes/signals'
 import { authToken$ } from 'flakes/auth'
 
+const isAuthed = authToken$
 const searchParams = new URLSearchParams(window.location.search.substr(1))
 if (searchParams.has('access_token')) {
   authToken$(searchParams.get('access_token'))
@@ -30,17 +31,25 @@ if (searchParams.has('access_token')) {
 const entries$ = createRegisteredValueSignal([])
 const loading$ = createRegisteredValueSignal(false)
 
-loading$(true)
-fetchEntries()
-  .then(entries$)
-  .finally(() => loading$(false))
-
-const persistEntriesDebounced = _.debounce(persistEntries, 500)
-s.root(() =>
+const autoPersistEntries = () => {
+  const persistEntriesDebounced = _.debounce(persistEntries, 500)
   s.on(entries$, () => {
     if (!loading$()) persistEntriesDebounced(entries$())
   })
-)
+}
+const autoFetchEntries = () =>
+  s(() => {
+    if (!isAuthed()) return
+    loading$(true)
+    fetchEntries()
+      .then(entries$)
+      .finally(() => loading$(false))
+  })
+
+s.root(() => {
+  autoPersistEntries()
+  autoFetchEntries()
+})
 
 const App = () => (
   <React.Fragment>
