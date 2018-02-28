@@ -32,7 +32,7 @@ const putEntries = (req, res) => {
 };
 
 const getGreeting = (req, res) => {
-  res.send({ hello: "world" });
+  res.send({ hello: req.user.sub });
 };
 
 const resources = { entries: "/entries", greeting: "/greeting" };
