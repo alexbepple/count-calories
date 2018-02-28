@@ -43,13 +43,11 @@ const autoFetchEntries = () =>
     loading$(true)
     fetchEntries()
       .then(entries$)
+      .then(() => autoPersistEntries())
       .finally(() => loading$(false))
   })
 
-s.root(() => {
-  autoPersistEntries()
-  autoFetchEntries()
-})
+s.root(() => autoFetchEntries())
 
 const App = () => (
   <React.Fragment>
