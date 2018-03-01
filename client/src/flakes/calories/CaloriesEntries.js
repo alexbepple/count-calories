@@ -51,6 +51,7 @@ export const CaloriesEntries = props => {
 
   return r.pipe(
     entries$,
+    r.sortBy(ceT.g.datetime),
     mapWithKey(ceT.g.id, renderEntry),
     r.compose(table, r.of, tbody)
   )()
