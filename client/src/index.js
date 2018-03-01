@@ -17,22 +17,11 @@ import {
   createRegisteredValueSignal,
   getRegisteredSignals
 } from 'flakes/signals'
-import { authToken$ } from 'flakes/auth'
+import { auth, isAuthed, NotAuthed } from 'flakes/auth'
 import { ProgressBarAtViewportTop } from 'flakes/presentation'
 // #endregion
 
-const isDevEnv = () => !r.isNil(module.hot)
-
-const searchParams = new URLSearchParams(window.location.search.substr(1))
-if (searchParams.has('access_token')) {
-  authToken$(searchParams.get('access_token'))
-  window.history.pushState({}, '', '/')
-}
-
-const isAuthed = r.either(isDevEnv, authToken$)
-if (!isAuthed()) {
-  window.location.assign('/api/login')
-}
+auth()
 
 const entries$ = createRegisteredValueSignal([])
 const loading$ = createRegisteredValueSignal(false)
@@ -63,13 +52,6 @@ const Main = () => (
       <h2>Entries</h2>
       <CaloriesEntries entries$={entries$} />
     </section>
-  </React.Fragment>
-)
-
-const NotAuthed = () => (
-  <React.Fragment>
-    <ProgressBarAtViewportTop loading />
-    <p>Not authorized. Redirecting to login page …</p>
   </React.Fragment>
 )
 
