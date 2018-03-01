@@ -39,4 +39,8 @@ describe("Entries in storage", () => {
       is("new entries")
     );
   });
+  it("– operations are curryable", () => {
+    sdT.getEntries("foo")(uninitializedStorageData);
+    sdT.setEntries("foo")(entriesForFoo)(uninitializedStorageData);
+  });
 });

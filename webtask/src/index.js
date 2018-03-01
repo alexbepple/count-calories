@@ -18,13 +18,13 @@ const setStorageData = r.curry((req, data) => {
 
 const getEntries = (req, res, next) =>
   getStorageData(req)
-    .then(data => sdT.getEntries(getUserId(req), data))
+    .then(sdT.getEntries(getUserId(req)))
     .then(res.send.bind(res))
     .catch(next);
 
 const putEntries = (req, res, next) =>
   getStorageData(req)
-    .then(data => sdT.setEntries(getUserId(req), req.body, data))
+    .then(sdT.setEntries(getUserId(req), req.body))
     .then(setStorageData(req))
     .then(() => getEntries(req, res, next))
     .catch(next);
