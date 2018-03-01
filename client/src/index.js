@@ -1,3 +1,4 @@
+// #region imports
 import * as React from 'react'
 import { render } from 'react-dom'
 import s from 's-js'
@@ -18,6 +19,7 @@ import {
 } from 'flakes/signals'
 import { authToken$ } from 'flakes/auth'
 import { ProgressBarAtViewportTop } from 'flakes/presentation'
+// #endregion
 
 const isDevEnv = () => !r.isNil(module.hot)
 
