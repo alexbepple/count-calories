@@ -2,7 +2,8 @@
   "scripts": {
     "start": "pm2-dev start pm2.json5",
     "deploy":
-      "wt create --bundle --secrets-file secrets.ini --name 'count-calories' src/"
+      "wt create --bundle --secrets-file secrets.ini --name 'count-calories' src/",
+    "test": "mocha --opts mocha.opts"
   },
   "private": true,
   "dependencies": {
@@ -12,7 +13,10 @@
     "webtask-tools": "^3.2.0"
   },
   "devDependencies": {
+    "hamjest": "^3.1.0",
+    "mocha": "^5.0.1",
     "pm2": "^2.10.1",
+    "reify": "^0.14.2",
     "wt-cli": "^8.3.1"
   }
 }
