@@ -1,8 +1,6 @@
 {
   "scripts": {
-    "start":
-      "cross-env NODE_ENV=development nodemon --ignore storage.json -x 'wt serve --storage-file storage.json' .",
-    "start_once": "wt serve .",
+    "start": "pm2-dev start pm2.json5",
     "deploy": "wt create --secrets-file secrets.ini --name 'count-calories' ."
   },
   "private": true,
@@ -13,8 +11,7 @@
     "webtask-tools": "^3.2.0"
   },
   "devDependencies": {
-    "cross-env": "^5.1.3",
-    "nodemon": "^1.17.1",
+    "pm2": "^2.10.1",
     "wt-cli": "^8.3.1"
   }
 }

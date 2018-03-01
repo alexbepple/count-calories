@@ -1,0 +1,14 @@
+{
+  apps: [
+    {
+      name: "webtask",
+      interpreter: "wt",
+      interpreter_args: "serve --storage-file storage.json",
+      script: "./index.js",
+      env: {
+        NODE_ENV: "development"
+      },
+      ignore_watch: ["storage.json"]
+    }
+  ]
+}
