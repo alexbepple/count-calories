@@ -1,4 +1,5 @@
 const express = require("express");
+const promiseRouter = require("express-promise-router");
 const bodyParser = require("body-parser");
 const wt = require("webtask-tools");
 const r = require("ramda");
@@ -18,15 +19,13 @@ const setStorageData = r.curry((data, req) =>
 const getEntries = (req, res, next) =>
   getStorageData(req)
     .then(sdT.getEntries(getUserId(req)))
-    .then(res.send.bind(res))
-    .catch(next);
+    .then(res.send.bind(res));
 
 const putEntries = (req, res, next) =>
   getStorageData(req)
     .then(sdT.setEntries(getUserId(req), req.body))
     .then(setStorageData(r.__, req))
-    .then(() => getEntries(req, res, next))
-    .catch(next);
+    .then(() => getEntries(req, res, next));
 
 const resources = { entries: "/entries" };
 
@@ -45,10 +44,12 @@ const secureWithAuth0 = wtApp =>
 
 module.exports = r.pipe(
   () =>
-    express()
-      .use(bodyParser.json())
-      .get(resources.entries, getEntries)
-      .put(resources.entries, putEntries),
+    express().use(
+      promiseRouter()
+        .use(bodyParser.json())
+        .get(resources.entries, getEntries)
+        .put(resources.entries, putEntries)
+    ),
   wt.fromExpress,
   r.when(r.complement(isDevEnv), secureWithAuth0)
 )();
