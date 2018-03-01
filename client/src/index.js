@@ -20,7 +20,6 @@ import {
 import { authToken$ } from 'flakes/auth'
 
 const isDevEnv = () => !r.isNil(module.hot)
-console.log('Is dev env?', isDevEnv()) // eslint-disable-line
 
 const searchParams = new URLSearchParams(window.location.search.substr(1))
 if (searchParams.has('access_token')) {
