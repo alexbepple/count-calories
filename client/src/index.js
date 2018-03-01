@@ -51,7 +51,7 @@ if (isAuthed()) {
     .finally(() => loading$(false))
 }
 
-const App = () => (
+const Main = () => (
   <React.Fragment>
     <div style={{ position: 'fixed', left: 0, top: 0, width: '100%' }}>
       <ProgressBar isLoading={loading$()} />
@@ -66,6 +66,17 @@ const App = () => (
     </section>
   </React.Fragment>
 )
+
+const NotAuthed = () => (
+  <div>
+    <div style={{ position: 'fixed', left: 0, top: 0, width: '100%' }}>
+      <ProgressBar isLoading />
+    </div>
+    <p>Not authorized. Redirecting to login page …</p>
+  </div>
+)
+
+const App = () => (isAuthed() ? <Main /> : <NotAuthed />)
 
 s.root(() =>
   s.on(getRegisteredSignals(), () =>
