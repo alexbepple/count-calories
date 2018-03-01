@@ -1,8 +1,7 @@
 {
   "scripts": {
     "start": "pm2-dev start pm2.json5",
-    "deploy":
-      "wt create --bundle --secrets-file secrets.ini --name 'count-calories' src/",
+    "deploy": "wt update --bundle count-calories src/",
     "test": "mocha --opts mocha.opts"
   },
   "private": true,
