@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon -x 'wt serve' .",
+    "start":
+      "cross-env NODE_ENV=development nodemon --ignore storage.json -x 'wt serve --storage-file storage.json' .",
     "start_once": "wt serve .",
     "deploy": "wt create --secrets-file secrets.ini --name 'count-calories' ."
   },
