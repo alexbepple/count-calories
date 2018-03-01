@@ -11,7 +11,7 @@ const getStorage = req => req.webtaskContext.storage;
 const promisifiedFromStorage = (methodName, object) =>
   promisify(object[methodName].bind(object));
 const getStorageData = req => promisifiedFromStorage("get", getStorage(req))();
-const setStorageData = r.curry((req, data) =>
+const setStorageData = r.curry((data, req) =>
   promisifiedFromStorage("set", getStorage(req))(data)
 );
 
@@ -24,7 +24,7 @@ const getEntries = (req, res, next) =>
 const putEntries = (req, res, next) =>
   getStorageData(req)
     .then(sdT.setEntries(getUserId(req), req.body))
-    .then(setStorageData(req))
+    .then(setStorageData(r.__, req))
     .then(() => getEntries(req, res, next))
     .catch(next);
 
