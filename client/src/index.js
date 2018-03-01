@@ -19,12 +19,17 @@ import {
 } from 'flakes/signals'
 import { authToken$ } from 'flakes/auth'
 
-const isAuthed = authToken$
+const isDevEnv = () => !r.isNil(module.hot)
+console.log('Is dev env?', isDevEnv()) // eslint-disable-line
+
 const searchParams = new URLSearchParams(window.location.search.substr(1))
 if (searchParams.has('access_token')) {
   authToken$(searchParams.get('access_token'))
   window.history.pushState({}, '', '/')
-} else {
+}
+
+const isAuthed = r.either(isDevEnv, authToken$)
+if (!isAuthed()) {
   window.location.assign('/api/login')
 }
 
