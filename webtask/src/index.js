@@ -3,28 +3,31 @@ const bodyParser = require("body-parser");
 const wt = require("webtask-tools");
 const r = require("ramda");
 const sdT = require("./storage");
+const promisify = require("util.promisify");
 
 const getUserId = req => r.defaultTo("fooId", req.user && req.user.sub);
 
-const getEntries = (req, res) => {
+const getStorageData = req => {
   const storage = req.webtaskContext.storage;
-  storage.get((err, data) => {
-    const entries = sdT.getEntries(getUserId(req), data);
-    res.status(200).send(entries);
-  });
+  return promisify(storage.get.bind(storage))();
 };
+const setStorageData = r.curry((req, data) => {
+  const storage = req.webtaskContext.storage;
+  return promisify(storage.set.bind(storage))(data);
+});
 
-const putEntries = (req, res) => {
-  const storage = req.webtaskContext.storage;
-  const entries = req.body;
-  storage.get((err, data) => {
-    if (err) res.status(500).send(err);
-    storage.set(sdT.setEntries(getUserId(req), entries, data), err => {
-      if (err) res.status(500).send(err);
-      getEntries(req, res);
-    });
-  });
-};
+const getEntries = (req, res, next) =>
+  getStorageData(req)
+    .then(data => sdT.getEntries(getUserId(req), data))
+    .then(res.send.bind(res))
+    .catch(next);
+
+const putEntries = (req, res, next) =>
+  getStorageData(req)
+    .then(data => sdT.setEntries(getUserId(req), req.body, data))
+    .then(setStorageData(req))
+    .then(() => getEntries(req, res, next))
+    .catch(next);
 
 const resources = { entries: "/entries" };
 
