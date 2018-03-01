@@ -4,7 +4,7 @@
       name: "webtask",
       interpreter: "wt",
       interpreter_args: "serve --storage-file storage.json",
-      script: "./index.js",
+      script: "src/",
       env: {
         NODE_ENV: "development"
       },
