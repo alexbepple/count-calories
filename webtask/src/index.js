@@ -7,14 +7,13 @@ const promisify = require("util.promisify");
 
 const getUserId = req => r.defaultTo("fooId", req.user && req.user.sub);
 
-const getStorageData = req => {
-  const storage = req.webtaskContext.storage;
-  return promisify(storage.get.bind(storage))();
-};
-const setStorageData = r.curry((req, data) => {
-  const storage = req.webtaskContext.storage;
-  return promisify(storage.set.bind(storage))(data);
-});
+const getStorage = req => req.webtaskContext.storage;
+const promisifiedFromStorage = (methodName, object) =>
+  promisify(object[methodName].bind(object));
+const getStorageData = req => promisifiedFromStorage("get", getStorage(req))();
+const setStorageData = r.curry((req, data) =>
+  promisifiedFromStorage("set", getStorage(req))(data)
+);
 
 const getEntries = (req, res, next) =>
   getStorageData(req)
