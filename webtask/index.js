@@ -33,20 +33,25 @@ const putEntries = (req, res) => {
 
 const resources = { entries: "/entries" };
 
-module.exports = wt
-  .fromExpress(
-    express()
-      .use(bodyParser.json())
-      .get(resources.entries, getEntries)
-      .put(resources.entries, putEntries)
-  )
-  .auth0({
+const isDevEnv = () => process.env.NODE_ENV === "development";
+
+const secureWithAuth0 = wtApp =>
+  wtApp.auth0({
     loginSuccess: (ctx, req, res, baseUrl) => {
-      res.writeHead(302, {
-        Location: `https://count-calories.netlify.com/?access_token=${
-          ctx.accessToken
-        }`
-      });
+      const homeWithAccessToken = `https://count-calories.netlify.com/?access_token=${
+        ctx.accessToken
+      }`;
+      res.writeHead(302, { Location: homeWithAccessToken });
       return res.end();
     }
   });
+
+module.exports = r.pipe(
+  () =>
+    express()
+      .use(bodyParser.json())
+      .get(resources.entries, getEntries)
+      .put(resources.entries, putEntries),
+  wt.fromExpress,
+  r.when(r.complement(isDevEnv), secureWithAuth0)
+)();
