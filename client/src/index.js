@@ -3,7 +3,6 @@ import { render } from 'react-dom'
 import s from 's-js'
 import * as r from 'ramda'
 import * as _ from 'lodash'
-import { ProgressBar } from 'reprogressbars'
 
 import * as z from 'util/s-js'
 
@@ -18,6 +17,7 @@ import {
   getRegisteredSignals
 } from 'flakes/signals'
 import { authToken$ } from 'flakes/auth'
+import { ProgressBarAtViewportTop } from 'flakes/presentation'
 
 const isDevEnv = () => !r.isNil(module.hot)
 
@@ -52,9 +52,7 @@ if (isAuthed()) {
 
 const Main = () => (
   <React.Fragment>
-    <div style={{ position: 'fixed', left: 0, top: 0, width: '100%' }}>
-      <ProgressBar isLoading={loading$()} />
-    </div>
+    <ProgressBarAtViewportTop loading={loading$()} />
     <section>
       <h2>Add Entry</h2>
       <NewCaloriesEntry onAdd={x => z.evolve(r.append(x), entries$)} />
@@ -67,12 +65,10 @@ const Main = () => (
 )
 
 const NotAuthed = () => (
-  <div>
-    <div style={{ position: 'fixed', left: 0, top: 0, width: '100%' }}>
-      <ProgressBar isLoading />
-    </div>
+  <React.Fragment>
+    <ProgressBarAtViewportTop loading />
     <p>Not authorized. Redirecting to login page …</p>
-  </div>
+  </React.Fragment>
 )
 
 const App = () => (isAuthed() ? <Main /> : <NotAuthed />)
