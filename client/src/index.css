@@ -1,6 +1,7 @@
-@import './normalize.css';
+@import './normalize-more.css';
 
-body {
+body,
+input {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
 }
