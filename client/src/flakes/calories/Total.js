@@ -11,7 +11,7 @@ const getColorInRelationToLimit = r.ifElse(
   () => 'green'
 )
 export const total = val => (
-  <small style={{ color: getColorInRelationToLimit(val) }}>
+  <small className={getColorInRelationToLimit(val)}>
     Total: {formatKcal(val)}
   </small>
 )
