@@ -39,8 +39,8 @@ const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
 const getDatetimeOfList = r.compose(ceT.g.datetime, r.head)
 
 const renderHeaderForListOfEntries = entries => (
-  <header className="mb2">
-    <h3 className="mb1">{formatDate(getDatetimeOfList(entries))}</h3>
+  <header className='mb2'>
+    <h3 className='mb1'>{formatDate(getDatetimeOfList(entries))}</h3>
     <small>Total: {formatKcal(ceT.sumKcal(entries))}</small>
   </header>
 )
