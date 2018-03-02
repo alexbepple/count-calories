@@ -1,4 +1,5 @@
 import * as r from 'ramda'
+import * as React from 'react'
 import h from 'react-hyperscript'
 import hh from 'hyperscript-helpers'
 import { DateTime } from 'luxon'
@@ -12,7 +13,7 @@ import { EntryEditor } from './EntryEditor'
 import { createRegisteredValueSignal } from '../signals'
 import { getDate } from 'util/datetime'
 
-const { table, tbody, tr, td, h3, article } = hh(h)
+const { table, tbody, tr, td, h3, article, small, header } = hh(h)
 
 const t = defineTypeWithProps('entries$')
 
@@ -36,7 +37,13 @@ const renderReadOnly = r.juxt([
 const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
 
 const getDatetimeOfList = r.compose(ceT.g.datetime, r.head)
-const renderDateForListOfEntries = r.pipe(getDatetimeOfList, formatDate, h3)
+
+const renderHeaderForListOfEntries = entries => (
+  <header>
+    <h3>{formatDate(getDatetimeOfList(entries))}</h3>
+    <small>Total: {formatKcal(ceT.sumKcal(entries))}</small>
+  </header>
+)
 
 export const CaloriesEntries = props => {
   const entries$ = t.g.entries$(props)
@@ -67,7 +74,7 @@ export const CaloriesEntries = props => {
     r.values,
     r.sort(r.descend(getDatetimeOfList)),
     r.map(
-      r.compose(article, r.juxt([renderDateForListOfEntries, renderEntries]))
+      r.compose(article, r.juxt([renderHeaderForListOfEntries, renderEntries]))
     ),
     autoKey
   )()
