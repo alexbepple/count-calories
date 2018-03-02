@@ -24,7 +24,12 @@ import {
 } from 'flakes/signals'
 import { auth, isAuthed, NotAuthed } from 'flakes/auth'
 import { ProgressBarAtViewportTop } from 'flakes/presentation'
-import { DailyLimitEditor, refreshDailyLimit } from 'flakes/daily-limit'
+import {
+  DailyLimitEditor,
+  refreshDailyLimit,
+  dailyLimit$,
+  persistDailyLimit
+} from 'flakes/daily-limit'
 // #endregion
 
 auth()
@@ -38,7 +43,16 @@ const autoPersistEntries = () => {
     if (!loading$()) persistEntriesDebounced(entries$())
   })
 }
-s.root(() => autoPersistEntries())
+const autoPersistDailyLimit = () => {
+  const persistDailyLimitDebounced = _.debounce(persistDailyLimit, 500)
+  z.onChanges(dailyLimit$, () => {
+    if (!loading$()) persistDailyLimitDebounced(dailyLimit$())
+  })
+}
+s.root(() => {
+  autoPersistEntries()
+  autoPersistDailyLimit()
+})
 
 if (isAuthed()) {
   loading$(true)
