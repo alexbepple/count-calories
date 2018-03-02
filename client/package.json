@@ -4,11 +4,14 @@
   },
   "scripts": {
     "precommit":
-      "yarn test && pretty-quick --staged && standard --fix && eslint src",
+      "yarn test && pretty-quick --staged && lint-staged && eslint src",
     "start": "node parcel+proxy.js",
     "build":
       "parcel build $npm_package_config_parcel_entry_point --public-url ./",
     "test": "mocha --opts mocha.opts"
+  },
+  "lint-staged": {
+    "*.js": ["standard --fix", "git add"]
   },
   "private": true,
   "dependencies": {
@@ -34,6 +37,7 @@
     "hamjest": "^3.1.0",
     "http-proxy-middleware": "^0.17.4",
     "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
     "mocha": "^5.0.0",
     "parcel-bundler": "^1.5.1",
     "prettier": "1.10.2",
