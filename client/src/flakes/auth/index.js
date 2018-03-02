@@ -27,6 +27,6 @@ export const auth = () => {
 export const NotAuthed = () => (
   <React.Fragment>
     <ProgressBarAtViewportTop loading />
-    <p>Not authorized. Redirecting to login page …</p>
+    <p className='mx1 my1'>Not authorized. Redirecting to login page …</p>
   </React.Fragment>
 )
