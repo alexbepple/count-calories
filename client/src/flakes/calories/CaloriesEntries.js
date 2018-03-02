@@ -7,11 +7,13 @@ import { DateTime } from 'luxon'
 import { defineTypeWithProps } from 'util/types'
 import { autoKey, mapWithKey } from 'util/react'
 import { derive, evolve } from 'util/s-js'
+import { getDate } from 'util/datetime'
+
+import { exceedsLimit } from 'flakes/daily-limit'
+import { createRegisteredValueSignal } from 'flakes/signals'
 
 import * as ceT from './calories-entry-type'
 import { EntryEditor } from './EntryEditor'
-import { createRegisteredValueSignal } from '../signals'
-import { getDate } from 'util/datetime'
 
 const { table, tbody, tr, td, h3, article, small, header } = hh(h)
 
@@ -38,22 +40,21 @@ const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
 
 const getDatetimeOfList = r.compose(ceT.g.datetime, r.head)
 
-const limit = 1000
 const getColorInRelationToLimit = r.ifElse(
-  r.lte(limit),
+  exceedsLimit,
   () => 'red',
   () => 'green'
 )
-const renderTotal = total => (
-  <small style={{ color: getColorInRelationToLimit(total) }}>
-    Total: {formatKcal(total)}
+const total = val => (
+  <small style={{ color: getColorInRelationToLimit(val) }}>
+    Total: {formatKcal(val)}
   </small>
 )
 
 const renderHeaderForListOfEntries = entries => (
   <header className='mb2'>
     <h3 className='mb1'>{formatDate(getDatetimeOfList(entries))}</h3>
-    {renderTotal(ceT.sumKcal(entries))}
+    {total(ceT.sumKcal(entries))}
   </header>
 )
 
