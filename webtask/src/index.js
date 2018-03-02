@@ -16,6 +16,11 @@ const setStorageData = r.curry((data, req) =>
   promisifiedFromStorage("set", getStorage(req))(data)
 );
 
+const getDailyLimit = (req, res, next) =>
+  getStorageData(req)
+    .then(sdT.getDailyLimit(getUserId(req)))
+    .then(res.json.bind(res));
+
 const getEntries = (req, res, next) =>
   getStorageData(req)
     .then(sdT.getEntries(getUserId(req)))
@@ -27,7 +32,7 @@ const putEntries = (req, res, next) =>
     .then(setStorageData(r.__, req))
     .then(() => getEntries(req, res, next));
 
-const resources = { entries: "/entries" };
+const resources = { entries: "/entries", dailyLimit: "/daily-limit" };
 
 const isDevEnv = () => process.env.NODE_ENV === "development";
 
@@ -49,6 +54,7 @@ module.exports = r.pipe(
         .use(bodyParser.json())
         .get(resources.entries, getEntries)
         .put(resources.entries, putEntries)
+        .get(resources.dailyLimit, getDailyLimit)
     ),
   wt.fromExpress,
   r.when(r.complement(isDevEnv), secureWithAuth0)
