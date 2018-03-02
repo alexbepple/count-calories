@@ -38,10 +38,22 @@ const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
 
 const getDatetimeOfList = r.compose(ceT.g.datetime, r.head)
 
+const limit = 1000
+const getColorInRelationToLimit = r.ifElse(
+  r.lte(limit),
+  () => 'red',
+  () => 'green'
+)
+const renderTotal = total => (
+  <small style={{ color: getColorInRelationToLimit(total) }}>
+    Total: {formatKcal(total)}
+  </small>
+)
+
 const renderHeaderForListOfEntries = entries => (
   <header className='mb2'>
     <h3 className='mb1'>{formatDate(getDatetimeOfList(entries))}</h3>
-    <small>Total: {formatKcal(ceT.sumKcal(entries))}</small>
+    {renderTotal(ceT.sumKcal(entries))}
   </header>
 )
 
