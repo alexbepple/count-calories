@@ -7,9 +7,9 @@ import * as dt from 'util/datetime'
 const t = defineTypeWithProps('id', 'datetime', 'description', 'kcal')
 export const { p, l, g, s } = t
 
-export const create = (time, desc, calories) => ({
+export const create = (datetime, desc, calories) => ({
   [p.id]: shortid.generate(),
-  [p.datetime]: time,
+  [p.datetime]: datetime,
   [p.description]: desc,
   [p.kcal]: calories
 })

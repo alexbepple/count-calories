@@ -10,6 +10,7 @@ import { derive, evolve } from 'util/s-js'
 import * as ceT from './calories-entry-type'
 import { EntryEditor } from './EntryEditor'
 import { createRegisteredValueSignal } from '../signals'
+import { getDate } from 'util/datetime'
 
 const { table, tbody, tr, td } = hh(h)
 
@@ -52,7 +53,11 @@ export const CaloriesEntries = props => {
   return r.pipe(
     entries$,
     r.sortBy(ceT.g.datetime),
-    mapWithKey(ceT.g.id, renderEntry),
-    r.compose(table, r.of, tbody)
+    r.groupBy(r.compose(getDate, ceT.g.datetime)),
+    r.map(
+      r.pipe(mapWithKey(ceT.g.id, renderEntry), r.compose(table, r.of, tbody))
+    ),
+    r.values,
+    autoKey
   )()
 }
