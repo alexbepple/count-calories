@@ -24,7 +24,7 @@ import {
 } from 'flakes/signals'
 import { auth, isAuthed, NotAuthed } from 'flakes/auth'
 import { ProgressBarAtViewportTop } from 'flakes/presentation'
-import { DailyLimitEditor } from 'flakes/daily-limit'
+import { DailyLimitEditor, refreshDailyLimit } from 'flakes/daily-limit'
 // #endregion
 
 auth()
@@ -45,6 +45,8 @@ if (isAuthed()) {
   fetchEntries()
     .then(entries$)
     .finally(() => loading$(false))
+
+  refreshDailyLimit()
 }
 
 const grid = {
