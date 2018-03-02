@@ -4,6 +4,7 @@ import { render } from 'react-dom'
 import s from 's-js'
 import * as r from 'ramda'
 import * as _ from 'lodash'
+import 'normalize.css'
 
 import * as z from 'util/s-js'
 
