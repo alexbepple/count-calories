@@ -35,12 +35,8 @@ const renderReadOnly = r.juxt([
 
 const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
 
-const renderDateForListOfEntries = r.pipe(
-  r.head,
-  ceT.g.datetime,
-  formatDate,
-  h3
-)
+const getDatetimeOfList = r.compose(ceT.g.datetime, r.head)
+const renderDateForListOfEntries = r.pipe(getDatetimeOfList, formatDate, h3)
 
 export const CaloriesEntries = props => {
   const entries$ = t.g.entries$(props)
@@ -68,10 +64,11 @@ export const CaloriesEntries = props => {
   return r.pipe(
     entries$,
     r.groupBy(r.compose(getDate, ceT.g.datetime)),
+    r.values,
+    r.sort(r.descend(getDatetimeOfList)),
     r.map(
       r.compose(article, r.juxt([renderDateForListOfEntries, renderEntries]))
     ),
-    r.values,
     autoKey
   )()
 }
