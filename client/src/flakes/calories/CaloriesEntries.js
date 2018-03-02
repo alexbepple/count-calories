@@ -9,13 +9,14 @@ import { autoKey, mapWithKey } from 'util/react'
 import { derive, evolve } from 'util/s-js'
 import { getDate } from 'util/datetime'
 
-import { exceedsLimit } from 'flakes/daily-limit'
 import { createRegisteredValueSignal } from 'flakes/signals'
 
 import * as ceT from './calories-entry-type'
 import { EntryEditor } from './EntryEditor'
+import { formatKcal } from './format'
+import { total } from './Total'
 
-const { table, tbody, tr, td, h3, article, small, header } = hh(h)
+const { table, tbody, tr, td, h3, article, header } = hh(h)
 
 const t = defineTypeWithProps('entries$')
 
@@ -28,8 +29,6 @@ const formatTime = x =>
 const formatDate = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATE_HUGE)
 
-const formatKcal = r.pipe(r.toString, r.concat(r.__, ' kcal'))
-
 const renderReadOnly = r.juxt([
   r.compose(formatTime, ceT.g.datetime),
   ceT.g.description,
@@ -39,17 +38,6 @@ const renderReadOnly = r.juxt([
 const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
 
 const getDatetimeOfList = r.compose(ceT.g.datetime, r.head)
-
-const getColorInRelationToLimit = r.ifElse(
-  exceedsLimit,
-  () => 'red',
-  () => 'green'
-)
-const total = val => (
-  <small style={{ color: getColorInRelationToLimit(val) }}>
-    Total: {formatKcal(val)}
-  </small>
-)
 
 const renderHeaderForListOfEntries = entries => (
   <header className='mb2'>
