@@ -46,23 +46,31 @@ if (isAuthed()) {
     .finally(() => loading$(false))
 }
 
+const grid = {
+  display: 'grid',
+  gridTemplateColumns: 'auto auto',
+  gridTemplateAreas: '"main aside"'
+}
+
 const Main = () => (
   <React.Fragment>
     <ProgressBarAtViewportTop loading={loading$()} />
-    <aside>
-      <h2>Daily Limit</h2>
-      <DailyLimitEditor />
-    </aside>
-    <main className='mx3 my2'>
-      <section>
-        <h2>Add Entry</h2>
-        <NewCaloriesEntry onAdd={x => z.evolve(r.append(x), entries$)} />
-      </section>
-      <section className='mt4'>
-        <h2>Entries</h2>
-        <CaloriesEntries entries$={entries$} />
-      </section>
-    </main>
+    <div style={grid}>
+      <aside style={{ gridArea: 'aside' }}>
+        <h2>Daily Limit</h2>
+        <DailyLimitEditor />
+      </aside>
+      <main className='mx3 my2' style={{ gridArea: 'main' }}>
+        <section>
+          <h2>Add Entry</h2>
+          <NewCaloriesEntry onAdd={x => z.evolve(r.append(x), entries$)} />
+        </section>
+        <section className='mt4'>
+          <h2>Entries</h2>
+          <CaloriesEntries entries$={entries$} />
+        </section>
+      </main>
+    </div>
   </React.Fragment>
 )
 
