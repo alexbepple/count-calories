@@ -3,7 +3,8 @@
     "parcel_entry_point": "src/index.html"
   },
   "scripts": {
-    "precommit": "yarn test && pretty-quick --staged && standard && eslint src",
+    "precommit":
+      "yarn test && pretty-quick --staged && standard --fix && eslint src",
     "start": "node parcel+proxy.js",
     "build":
       "parcel build $npm_package_config_parcel_entry_point --public-url ./",
