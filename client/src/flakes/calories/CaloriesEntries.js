@@ -12,7 +12,7 @@ import { EntryEditor } from './EntryEditor'
 import { createRegisteredValueSignal } from '../signals'
 import { getDate } from 'util/datetime'
 
-const { table, tbody, tr, td } = hh(h)
+const { table, tbody, tr, td, h3, article } = hh(h)
 
 const t = defineTypeWithProps('entries$')
 
@@ -22,6 +22,8 @@ const startEditing = ce => evolve(r.append(ceT.g.id(ce)), editedIds$)
 
 const formatDateTime = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
+const formatDate = x =>
+  DateTime.fromJSDate(x).toLocaleString(DateTime.DATE_HUGE)
 
 const formatKcal = r.pipe(r.toString, r.concat(r.__, ' kcal'))
 
@@ -32,6 +34,13 @@ const renderReadOnly = r.juxt([
 ])
 
 const createCells = r.pipe(r.map(r.pipe(r.of, td)), autoKey)
+
+const renderDateForListOfEntries = r.pipe(
+  r.head,
+  ceT.g.datetime,
+  formatDate,
+  h3
+)
 
 export const CaloriesEntries = props => {
   const entries$ = t.g.entries$(props)
@@ -50,12 +59,17 @@ export const CaloriesEntries = props => {
         )
     )()
 
+  const renderEntries = r.pipe(
+    r.sortBy(ceT.g.datetime),
+    mapWithKey(ceT.g.id, renderEntry),
+    r.compose(table, r.of, tbody)
+  )
+
   return r.pipe(
     entries$,
-    r.sortBy(ceT.g.datetime),
     r.groupBy(r.compose(getDate, ceT.g.datetime)),
     r.map(
-      r.pipe(mapWithKey(ceT.g.id, renderEntry), r.compose(table, r.of, tbody))
+      r.compose(article, r.juxt([renderDateForListOfEntries, renderEntries]))
     ),
     r.values,
     autoKey
