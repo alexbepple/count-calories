@@ -56,11 +56,9 @@ s.root(() => {
 
 if (isAuthed()) {
   loading$(true)
-  fetchEntries()
-    .then(entries$)
-    .finally(() => loading$(false))
-
-  refreshDailyLimit()
+  Promise.all([fetchEntries().then(entries$), refreshDailyLimit()]).finally(
+    () => loading$(false)
+  )
 }
 
 const grid = {
