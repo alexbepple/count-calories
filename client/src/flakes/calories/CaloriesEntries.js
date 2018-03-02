@@ -20,15 +20,15 @@ const editedIds$ = createRegisteredValueSignal([])
 const isBeingEdited = ce => r.contains(ceT.g.id(ce), editedIds$())
 const startEditing = ce => evolve(r.append(ceT.g.id(ce)), editedIds$)
 
-const formatDateTime = x =>
-  DateTime.fromJSDate(x).toLocaleString(DateTime.DATETIME_SHORT)
+const formatTime = x =>
+  DateTime.fromJSDate(x).toLocaleString(DateTime.TIME_SIMPLE)
 const formatDate = x =>
   DateTime.fromJSDate(x).toLocaleString(DateTime.DATE_HUGE)
 
 const formatKcal = r.pipe(r.toString, r.concat(r.__, ' kcal'))
 
 const renderReadOnly = r.juxt([
-  r.compose(formatDateTime, ceT.g.datetime),
+  r.compose(formatTime, ceT.g.datetime),
   ceT.g.description,
   r.compose(formatKcal, ceT.g.kcal)
 ])
