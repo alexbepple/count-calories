@@ -8,7 +8,7 @@
     "start": "node parcel+proxy.js",
     "build":
       "parcel build $npm_package_config_parcel_entry_point --public-url ./",
-    "test": "mocha --opts mocha.opts"
+    "test": "NODE_PATH=./src mocha --opts mocha.opts"
   },
   "lint-staged": {
     "*.js": ["standard --fix", "git add"]

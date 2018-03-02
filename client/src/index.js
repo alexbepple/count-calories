@@ -23,6 +23,7 @@ import {
 } from 'flakes/signals'
 import { auth, isAuthed, NotAuthed } from 'flakes/auth'
 import { ProgressBarAtViewportTop } from 'flakes/presentation'
+import { DailyLimitEditor } from 'flakes/daily-limit'
 // #endregion
 
 auth()
@@ -48,6 +49,10 @@ if (isAuthed()) {
 const Main = () => (
   <React.Fragment>
     <ProgressBarAtViewportTop loading={loading$()} />
+    <aside>
+      <h2>Daily Limit</h2>
+      <DailyLimitEditor />
+    </aside>
     <main className='mx3 my2'>
       <section>
         <h2>Add Entry</h2>
