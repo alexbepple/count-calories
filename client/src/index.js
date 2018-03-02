@@ -4,8 +4,10 @@ import { render } from 'react-dom'
 import s from 's-js'
 import * as r from 'ramda'
 import * as _ from 'lodash'
+
 import 'normalize.css'
 import 'basscss/css/basscss.min.css'
+import './index.css'
 
 import * as z from 'util/s-js'
 
@@ -46,12 +48,12 @@ if (isAuthed()) {
 const Main = () => (
   <React.Fragment>
     <ProgressBarAtViewportTop loading={loading$()} />
-    <main className='mx3 my2'>
+    <main className="mx3 my2">
       <section>
         <h2>Add Entry</h2>
         <NewCaloriesEntry onAdd={x => z.evolve(r.append(x), entries$)} />
       </section>
-      <section className='mt4'>
+      <section className="mt4">
         <h2>Entries</h2>
         <CaloriesEntries entries$={entries$} />
       </section>
