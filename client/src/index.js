@@ -7,6 +7,7 @@ import * as _ from 'lodash'
 
 import 'normalize.css'
 import 'basscss/css/basscss.min.css'
+import 'colors.css/css/colors.min.css'
 import './index.css'
 
 import * as z from 'util/s-js'
@@ -47,6 +48,7 @@ if (isAuthed()) {
 }
 
 const grid = {
+  height: '100%',
   display: 'grid',
   gridTemplateColumns: 'auto auto',
   gridTemplateAreas: '"main aside"'
@@ -56,7 +58,7 @@ const Main = () => (
   <React.Fragment>
     <ProgressBarAtViewportTop loading={loading$()} />
     <div style={grid}>
-      <aside style={{ gridArea: 'aside' }}>
+      <aside style={{ gridArea: 'aside' }} className='bg-silver pl2'>
         <h2>Daily Limit</h2>
         <DailyLimitEditor />
       </aside>
