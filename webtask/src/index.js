@@ -21,6 +21,17 @@ const getDailyLimit = (req, res, next) =>
     .then(sdT.getDailyLimit(getUserId(req)))
     .then(res.json.bind(res));
 
+const putDailyLimit = (req, res, next) =>
+  getStorageData(req)
+    .then(
+      sdT.setDailyLimit(
+        getUserId(req),
+        r.tap(console.log.bind(console), req.body)
+      )
+    )
+    .then(setStorageData(r.__, req))
+    .then(() => getDailyLimit(req, res, next));
+
 const getEntries = (req, res, next) =>
   getStorageData(req)
     .then(sdT.getEntries(getUserId(req)))
@@ -51,10 +62,11 @@ module.exports = r.pipe(
   () =>
     express().use(
       promiseRouter()
-        .use(bodyParser.json())
+        .use(bodyParser.json({ strict: false }))
         .get(resources.entries, getEntries)
         .put(resources.entries, putEntries)
         .get(resources.dailyLimit, getDailyLimit)
+        .put(resources.dailyLimit, putDailyLimit)
     ),
   wt.fromExpress,
   r.when(r.complement(isDevEnv), secureWithAuth0)
