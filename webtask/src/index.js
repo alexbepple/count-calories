@@ -23,12 +23,7 @@ const getDailyLimit = (req, res, next) =>
 
 const putDailyLimit = (req, res, next) =>
   getStorageData(req)
-    .then(
-      sdT.setDailyLimit(
-        getUserId(req),
-        r.tap(console.log.bind(console), req.body)
-      )
-    )
+    .then(sdT.setDailyLimit(getUserId(req), req.body))
     .then(setStorageData(r.__, req))
     .then(() => getDailyLimit(req, res, next));
 
