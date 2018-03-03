@@ -73,7 +73,7 @@ const Main = () => (
   <React.Fragment>
     <ProgressBarAtViewportTop loading={loading$()} />
     <Headroom>
-      <h1 className='m0 py2 px3 bg-navy silver'>Count calories</h1>
+      <h1 className='m0 py2 px3 bg-navy silver'>Count Calories</h1>
     </Headroom>
     <div style={grid} className='navy'>
       <aside style={{ gridArea: 'aside' }} className='bg-silver pl2'>
