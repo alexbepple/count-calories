@@ -75,7 +75,7 @@ const Main = () => (
     <Headroom>
       <h1 className='m0 py2 px3 bg-navy silver'>Count calories</h1>
     </Headroom>
-    <div style={grid}>
+    <div style={grid} className='navy'>
       <aside style={{ gridArea: 'aside' }} className='bg-silver pl2'>
         <h2>Daily Limit</h2>
         <DailyLimitEditor />
