@@ -1,5 +1,6 @@
 // #region imports
 import * as React from 'react'
+import Headroom from 'react-headroom'
 import { render } from 'react-dom'
 import s from 's-js'
 import * as r from 'ramda'
@@ -71,6 +72,9 @@ const grid = {
 const Main = () => (
   <React.Fragment>
     <ProgressBarAtViewportTop loading={loading$()} />
+    <Headroom>
+      <h1 className='m0 py2 px3 bg-navy silver'>Count calories</h1>
+    </Headroom>
     <div style={grid}>
       <aside style={{ gridArea: 'aside' }} className='bg-silver pl2'>
         <h2>Daily Limit</h2>
