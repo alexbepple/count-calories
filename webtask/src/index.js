@@ -38,7 +38,15 @@ const putEntries = (req, res, next) =>
     .then(setStorageData(r.__, req))
     .then(() => getEntries(req, res, next));
 
-const resources = { entries: "/entries", dailyLimit: "/daily-limit" };
+const getMe = (req, res) => {
+  res.json(req.user);
+};
+
+const resources = {
+  entries: "/entries",
+  dailyLimit: "/daily-limit",
+  me: "/me"
+};
 
 const isDevEnv = () => process.env.NODE_ENV === "development";
 
@@ -62,6 +70,7 @@ module.exports = r.pipe(
         .put(resources.entries, putEntries)
         .get(resources.dailyLimit, getDailyLimit)
         .put(resources.dailyLimit, putDailyLimit)
+        .get(resources.me, getMe)
     ),
   wt.fromExpress,
   r.when(r.complement(isDevEnv), secureWithAuth0)
